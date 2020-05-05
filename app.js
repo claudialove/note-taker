@@ -16,67 +16,31 @@ app.use(express.json());
 // ==================================================================
 
 //what routes do we need?
-    // GET "/"   reads > returns all saved notes as JSON
-    // POST "/addNote"  receive data to add to the db.json and return it
-    // DELETE /deleteNote/:id  receive query parameter of ID of note to delte
-    //api route to POST a new reservation request
+ // homepage
+ // /notes where notes can be seen 
+ // /notes/add
 
     app.get("/", function (req, res){
-        //reads notes array and displays them to note-taker
-        $("#start-btn").on("click", function(event) {
-            event.preventDefault();
-           window.location.href="/note/add";
-            });
-      
-            // Question: What does this code do??
-            $.post("/note/add", newNote)
-              .then(function(data) {
-                console.log("add.html", data);
-                alert("Adding character...");
-              });
-        });
-
-    app.get("/note", function (req, res){
-    //reads notes array and displays them to note-taker
-  
+        //this path goes to index.html
+      res.sendFile(path.join(__dirname, "public/index.html"))
     });
 
+    app.get("/notes", function (req, res){
+    //this path goes to notes.html where user can view notes
+    res.sendFile(path.join(__dirname, "public/notes.html"))
+    //getNotes(); //how do i call this since it lives in another file
+    });
+
+
     app.get("/note/add", function (req, res){
-    //listens for user interaction to create a new note, then instantiaties note object to the array
+    //adding files uses text box input, not sure what i need to write here +/- how much this conflicts with function in index.js
     
     });
 
     app.get("/note/delete/:id", function (req, res){
-    //reads the id of the selected note then loops through the array to match the id and then rewrites the array without the deleted note
+    //there are no objects on screen for activating delete...
   
     });
-
-    //create a new note
-    app.post("/note/add", function(req,res){
-        var newNote = req.body;
-        note.routeName = newNote.name.replace(/\s+/g, "").toLowerCase();
-
-        console.log(newNote);
-        note.push(newNote);
-        res.json(newNote);
-
-    });
-    $("#add-btn").on("click", function(event) {
-        event.preventDefault();
-        var newNote = {
-            id: $("#id").val().trim(),
-          name: $("#name").val().trim()
-        };
-  
-        // Question: What does this code do??
-        $.post("/note/add", newNote)
-          .then(function(data) {
-            console.log("add.html", data);
-            alert("Adding character...");
-          });
-      });
-
-
 
 // Starts the server to begin listening
 app.listen(PORT, function() {
