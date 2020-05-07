@@ -33,9 +33,7 @@ app.get("/api/notes", function (req, res) {
 
 //this is the route for writing and saving new notes usins add functionality
 app.post("/api/notes", function(req, res){
-    console.log(req.body);
     const newNote = {title: req.body.title, text: req.body.text};
-    console.log("newNote is " + newNote);
     fs.readFile("./db/db.json", "utf8", function (err, data) {
         if (err) throw err;
         data = JSON.parse(data);
