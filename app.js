@@ -26,7 +26,7 @@ app.get("/notes", function (req, res) {
 app.get("/api/notes", function (req, res) {
     fs.readFile("./db/db.json", "utf8", function (err, data) {
         if (err) throw err;
-        data = JSON.parse(data);
+        data = JSON.parse(data);   
         res.json(data);
     });
 });
@@ -49,16 +49,19 @@ app.post("/api/notes", function(req, res){
 });
 
 app.delete("/api/notes/:id", function (req, res) {
-  res.sendFile("delete this file");
+ const id = req.params._id;
+ const notes = req.body;
+ Notes.removeNotes(id, (err, notes) => {
+  if (err) {
+   throw err;
+  }
+  res.json(notes);
+ });
+ res.sendFile("notes");
 });
-
 
 
 //this starts the server effectively and send console log to let us know its running
 app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
 });
-
-
-
-
